@@ -22,7 +22,7 @@
             <input type="text"
                 name="search"
                 id="search-bar"
-                placeholder="Chercher..."
+                placeholder="Chercher un utilisateur..."
                 [(ngModel)]="searchQuery"
                 (input)="searchUsers()">
             <!--<button type="submit">
@@ -36,8 +36,16 @@
         </form>
         <div class="contact">
             <ul>
-                <li><a href="#"><img src="user.jpeg" alt=""> John Doe</a></li>
-                <li><a href="#"><img src="user.jpeg" alt=""> John Doe</a></li>
+                <li *ngFor="let contact of contacts()">
+                  <a href="#" (click)="selectContact(contact)">
+                    <img [src]="'user.jpeg'" alt="{{ contact.username }}">
+                    {{ contact.username }}
+                    <span class="status"></span>
+                  </a>
+                </li>
+                @if (contacts().length === 0) {
+                  <li class="no-contacts">Aucun contact pour le moment</li>
+                }
             </ul>
         </div>
     </nav>

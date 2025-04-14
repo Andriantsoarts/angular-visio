@@ -163,13 +163,13 @@
     border: solid 1px white;
     background-color: var(--bg-light);
     color: var(--text-color);
-    font-size: 12px;
+    font-size: 15px;
     outline: none;
 }
 .side-bar form input[type="text"]:focus{
     font-size: 15px;
     background-color: var(--bg-light);
-    color: var(--primary-color);
+    color: var(--text-color-dark);
     border: solid 1px var(--bg-dark);
 }
 .side-bar form button[type="submit"]{
@@ -265,6 +265,7 @@
     align-items: center;
     text-decoration: none;
     color: var(--text-color-dark);
+    gap: 10px;
     font-size: medium;
     background-color: var(--primary-color);
     padding: 10px 20px;
@@ -288,6 +289,13 @@
     margin-right: 5px;
     border-radius: 50%;
     box-sizing: border-box;
+}
+.side-bar .contact ul li a .status{
+    height: 10px;
+    width: 10px;
+    border-radius: 50%;
+    background-color: var(--status-online);
+    box-shadow: var(--box-shadow);
 }
 /*Side-bar contact*/
 

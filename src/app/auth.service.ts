@@ -27,6 +27,7 @@ export class AuthService {
         })
         .then(user => {
             return setDoc(doc(this.firestore, 'users', user.uid), {
+                uid: user.uid,
                 username: username,
                 email: email,
                 usernameLowercase: username.toLowerCase(),

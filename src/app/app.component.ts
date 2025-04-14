@@ -9,6 +9,7 @@ import { Router } from '@angular/router';
 import {UserInterface} from './user.interface';
 import { collection, Firestore, getDocs, query, where } from '@angular/fire/firestore';
 import { FormsModule } from '@angular/forms';
+import { UserService } from './services/user.service';
 
 @Component({
   selector: 'app-root',
@@ -20,20 +21,25 @@ import { FormsModule } from '@angular/forms';
 })
 export class AppComponent implements OnInit {
     authService = inject(AuthService);
+    userService = inject(UserService);
     router = inject(Router);
     firestore = inject(Firestore);
     searchQuery = '';
     searchResults = signal<UserInterface[]>([]);
+    contacts = this.userService.contacts;
 
     ngOnInit():void {
       this.authService.user$.subscribe((user) => {
         if(user) {
           this.authService.currentUserSignal.set({
+            uid: user.uid,
             email: user.email!,
             username: user.displayName!,
           });
+          this.userService.getContacts(user.uid);
         } else {
           this.authService.currentUserSignal.set(null);
+          this.userService.contacts.set([]);
         }
       console.log(this.authService.currentUserSignal());
       })
@@ -142,6 +148,7 @@ export class AppComponent implements OnInit {
         querySnapshot.forEach((doc) => {
           const data = doc.data() as UserInterface;
           users.push({
+            uid: data.uid,
             email: data.email,
             username: data.username
           });
@@ -155,9 +162,22 @@ export class AppComponent implements OnInit {
       }
     }
 
-    selectUser(user: UserInterface): void {
+    async selectUser(user: UserInterface): Promise<void> {
+      const currentUserUid = this.authService.currentUserSignal()?.uid;
+      if (currentUserUid && user.uid) {
+        try {
+          await this.userService.addContact(currentUserUid, user.uid);
+          console.log('Contact ajouté:', user.username);
+        } catch (error: any) {
+          console.error('Erreur lors de l\'ajout:', error.message);
+        }
+      }
       console.log('Selected user:', user);
       this.searchQuery = '';
       this.searchResults.set([]);
+    }
+
+    selectContact(contact: UserInterface): void {
+      console.log('Selected contact:', contact);
     }
 }
