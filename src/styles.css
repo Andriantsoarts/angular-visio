@@ -1,1 +1,24 @@
-/* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+body{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+:root{
+    --primary-color: #04BBFF;
+    --secondary-color: #0594D0;
+    --primary-blur:#04bcff75;
+    --secondary-blur: #00000011;
+    --bg-light: #FBFBFB;
+    --bg-dark: rgba(0, 0, 0, 0.651);
+    --text-color: white;
+    --text-color-dark: rgba(0, 0, 0, 0.651);
+    --box-shadow: 0px 0px 10px black;
+    --box-shadow-blue: 0px 0px 10px var(--secondary-color);
+    --status-online: #00FF00;
+    --box-shadow-status-online: 0px 0px 5px var(--status-online);
+}
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

@@ -1,0 +1,315 @@
+.container{
+    box-sizing: border-box;
+    background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+.container .content{
+    background-color: var(--bg-light);
+    box-shadow: var(--box-shadow);
+    height: 90vh;
+    width: 60%;
+    display: flex;
+    position: relative;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+/*Content login/register*/
+.container .content .login,
+.container .content .register{
+    display: flex;
+    flex-direction: column;
+    background-color: var(--bg-dark);
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 50%;
+    position: relative;
+    box-sizing: border-box;
+}
+.container .content .login form,
+.container .content .register form{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+    max-width: 400px;
+    box-sizing: border-box;
+    padding: 50px;
+}
+.container .content .login form h1,
+.container .content .register form h1{
+    color: var(--primary-color);
+    text-align: center;
+    margin: 0 0 20px 0;
+
+}
+.container .content .login form label,
+.container .content .register form label{
+    color: var(--primary-color);
+}
+.container .content .login form input[type="email"],
+.container .content .login form input[type="password"],
+.container .content .register form input[type="email"],
+.container .content .register form input[type="password"]{
+    padding: 10px;
+    margin: 10px 0;
+    color: var(--text-color-dark);
+    background-color: var(--bg-light);
+    border-radius: 10px;
+    border: none;
+    /* border: solid 1px var(--primary-color); */
+    box-sizing: border-box;
+    outline: none;
+    box-shadow: var(--box-shadow);
+    transition: 0.3s ease-in-out;
+}
+input:autofill {
+    -webkit-text-fill-color: var(--text-color-dark) !important;
+}
+.container .content .login form input[type="email"]:focus,
+.container .content .login form input[type="password"]:focus,
+.container .content .register form input[type="email"]:focus,
+.container .content .register form input[type="password"]:focus{
+    background-color: var(--bg-dark);
+    box-shadow: var(--box-shadow-blue);
+    color: var(--text-color);
+}
+.container .content .login form input[type="email"]::placeholder,
+.container .content .login form input[type="password"]::placeholder,
+.container .content .register form input[type="email"]::placeholder,
+.container .content .register form input[type="password"]::placeholder{
+    color: var(--text-color-dark);
+    font-size: 12px;
+}
+.container .content .login form input[type="email"]:focus::placeholder,
+.container .content .login form input[type="password"]:focus::placeholder,
+.container .content .register form input[type="email"]:focus::placeholder,
+.container .content .register form input[type="password"]:focus::placeholder{
+    color: var(--text-color);
+    font-size: 12px;
+}
+.container .content .login form input[type="submit"],
+.container .content .register form input[type="submit"]{
+    background-color: var(--primary-color);
+    color: var(--text-color);
+    margin: 10px 0;
+    padding: 10px;
+    border-radius: 10px;
+    box-sizing: border-box;
+    font-weight: bold;
+    border: solid 1px var(--primary-color);
+    transition: 0.3s ease-in-out;
+}
+.container .content .login form input[type="submit"]:hover,
+.container .content .register form input[type="submit"]:hover{
+    transform: scale(1.05);
+    border: solid 1px var(--bg-dark);
+    background-color: var(--secondary-color);
+    box-shadow: var(--box-shadow-blue);
+    color: var(--text-color-dark);
+    cursor: pointer;
+}
+/*Content login/register*/
+
+
+/*Content register*/
+
+/*Content register*/
+
+
+/*Content hide-login*/
+.container .content .hide-login{
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    padding: 50px;
+    box-sizing: border-box;
+    justify-content: center;
+    align-items: center;
+    left: -50%;
+    background: url("/bg-login-l.jpg") no-repeat  center center;
+    background-size:cover;
+    box-shadow: none;
+    height: 100%;
+    width: 50%;
+    border-radius: 0 50% 50% 0;
+    transition: left 0.5s ease-in-out,
+                border-radius 0.5s ease-in-out ;
+}
+/*Content hide-login*/
+
+
+/*Content hide-register*/
+.container .content .hide-register{
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    padding: 50px;
+    box-sizing: border-box;
+    justify-content: center;
+    align-items: center;
+    right: 0%;
+    background: url("/bg-login-r.JPG") no-repeat center center;
+    background-size: cover;
+    box-shadow: var(--box-shadow);
+    height: 100%;
+    width: 50%;
+    border-radius: 0;
+    transition: right 0.5s ease-in-out,
+                border-radius 0.5s ease-in-out;
+}
+/*Content hide-register*/
+
+/*Common css hide-login hide-register*/
+
+.container .content .hide-login .login-greetings,
+.container .content .hide-register .login-greetings{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    height: 75%;
+    color: var(--text-color-dark);
+}
+.container .content .hide-login .login-greetings h1,
+.container .content .hide-register .login-greetings h1{
+    color: var(--primary-color);
+    text-align: center;
+}
+.container .content .hide-login .login-greetings a,
+.container .content .hide-register .login-greetings a{
+    text-decoration: none;
+    background-color: var(--bg-light);
+    padding: 10px;
+    color: var(--text-color-dark);
+    border: solid 1px var(--bg-dark);
+
+}
+.container .content .hide-login .login-greetings p,
+.container .content .hide-register .login-greetings p{
+    text-shadow: var(--box-shadow-blue);
+    font-size: small;
+    font-weight: bold;
+}
+.container .content .hide-login #btn-have,
+.container .content .hide-register #btn-dont-have{
+    background-color: var(--primary-color);
+    color: var(--text-color);
+    padding: 10px;
+    border-radius: 10px;
+    box-sizing: border-box;
+    font-weight: bold;
+    border: none;
+    transition: 0.3s ease-in-out;
+}
+.container .content .hide-login #btn-have:hover,
+.container .content .hide-register #btn-dont-have:hover{
+    transform: scale(1.05);
+    background-color: var(--secondary-color);
+    box-shadow: var(--box-shadow-blue);
+    color: var(--text-color-dark);
+    cursor: pointer;
+
+}
+/*Common css hide-login hide-register*/
+
+/*Button hidden*/
+
+/*Button hidden*/
+#btn-have-hiden,
+#btn-dont-have-hiden{
+    display: none;
+    position: absolute;
+    z-index: 2;
+    bottom: 0;
+    width: calc(100% - 40px);
+    margin: 0 20px;
+    background-color: var(--primary-color);
+    color: var(--text-color);
+    padding: 10px;
+    border-radius: 10px 10px 0 0;
+    box-sizing: border-box;
+    font-weight: bold;
+    border: none;
+    transition: 0.3s ease-in-out;
+}
+#btn-have-hiden:hover,
+#btn-dont-have-hiden:hover{
+    transform: scale(1.02);
+    background-color: var(--secondary-color);
+    box-shadow: var(--box-shadow-blue);
+    color: var(--text-color-dark);
+    cursor: pointer;
+}
+
+/*Responsive*/
+@media ((max-width:1100px) and (min-width: 768px)){
+    .container .content{
+        height: 90vh;
+        width: 90%;
+    }
+
+}
+@media ((max-width: 768px) and (min-width: 650px)) {
+    .container .content{
+        height: 100vh;
+        width: 100%;
+    }
+}
+@media (max-width: 650px) {
+    .container .content{
+        position: relative;
+        height: 100vh;
+        width: 100%;
+    }
+    .container .content .login,
+    .container .content .register{
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        transition: opacity 0.5s ease-in-out;
+    }
+    .container .content .login{
+        z-index: 2;
+        opacity: 1;
+    }
+    .container .content .register{
+        z-index: 1;
+        opacity: 0;
+        pointer-events:none;
+    }
+    .container .content .register.show-register{
+        z-index: 2;
+        opacity: 1;
+        pointer-events: auto;
+    }
+    .container .content .login.show-register{
+        z-index: 1;
+        opacity: 0;
+        pointer-events: none;
+    }
+
+    .container .content .hide-login,
+    .container .content .hide-register{
+        display: none;
+    }
+    #btn-dont-have-hiden{
+        display: block;
+    }
+
+}
+@media (min-width:1100px) {
+    .container .content{
+        max-width: 900px;
+    }
+}
+@media (min-height:768px) {
+    .container .content{
+        max-height: 600px;
+    }
+}
+/*Responsive*/

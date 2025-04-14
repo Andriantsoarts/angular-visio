@@ -1,0 +1,50 @@
+
+<div class="container">
+    <div class="content">
+        <div class="login" id="login">
+            <form [formGroup]="form" (ngSubmit)="onSubmitLogin()">
+                <h1>VisioChat</h1>
+                @if (errorMessage) {
+                  <div>{{ errorMessage }}</div>
+                }
+                <label for="email">Adresse email</label>
+                <input type="email" name="email" formControlName="email" id="email" placeholder="Entrez votre e-mail..." required>
+                <label for="password">Mot de passe</label>
+                <input type="password" name="password" formControlName="password" id="password" placeholder="Entrez votre mot de passe..." required>
+                <input type="submit" value="Se connecter" id="submit">
+            </form>
+        </div>
+        <div class="register" id="register">
+            <form [formGroup]="formRegister" (ngSubmit)="onSubmitRegister()">
+                <h1>VisioChat</h1>
+                @if (errorMessage) {
+                  <div>{{ errorMessage }}</div>
+                }
+                <label for="username-register">Nom d'utilisateur</label>
+                <input type="text" name="username-register" id="username-register" placeholder="Nom d'utilisateur" formControlName="username" required>
+                <label for="register-email">Adresse email</label>
+                <input type="email" name="register-email" formControlName="email" id="register-email" placeholder="Entrez votre e-mail..." formControlName="email" required>
+                <label for="password-register">Mot de passe</label>
+                <input type="password" name="password-register" id="password-register" placeholder="Entrez votre mot de passe..." formControlName="password" required>
+                <input type="submit" value="S'inscrire" id="submit-register">
+            </form>
+        </div>
+        <div class="hide-login" id="hide-login">
+            <div class="login-greetings">
+                <h1>S'inscrire</h1>
+                <p>Créez un compte en quelques secondes et démarrez ou rejoignez une visioconférence.</p>
+            </div>
+            <button id="btn-have">J'ai un compte</button>
+        </div>
+        <div class="hide-register" id="hide-register">
+            <div class="login-greetings">
+                <h1>Se connecter</h1>
+                <p>Accédez à vos réunions vidéo en toute simplicité.<br>
+                Connectez-vous pour démarrer ou rejoindre une visioconférence.</p>
+            </div>
+            <button id="btn-dont-have">Creer un compte</button>
+        </div>
+        <button id="btn-have-hiden">J'ai un compte</button>
+        <button id="btn-dont-have-hiden">Creer un compte</button>
+    </div>
+</div>
