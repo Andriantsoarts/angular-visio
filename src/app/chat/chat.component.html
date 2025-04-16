@@ -1,0 +1,28 @@
+<div class="chat">
+    <div class="header-chat">
+        <div class="user-info">
+            <img src="user.jpeg" alt="">
+            <h2>{{ otherParticipantUsername || 'Utilisateur' }}</h2>
+            <span class="status"></span>
+        </div>
+        <div class="options">
+            <i class="fa-solid fa-ellipsis"></i>
+        </div>
+    </div>
+
+    <div class="messages">
+        @if (messages.length === 0) {
+          <p>Aucun message pour le moment</p>
+        }
+        @for (message of messages; track message.id) {
+          <div class="message" [ngClass]="{'sent': isSentMessage(message), 'received': !isSentMessage(message)}">
+            <p>{{ message.content }} <br><span class="message-timestamp">{{ formatMessageDate(message.createdAt) }}</span></p>
+          </div>
+        }
+    </div>
+
+    <form [formGroup]="messageForm" (ngSubmit)="sendMessage()" class="send-message">
+        <input type="text" formControlName="content" id="message-input" placeholder="Entrez votre message...">
+        <button type="submit" [disabled]="messageForm.invalid"><i class="fa-solid fa-paper-plane"></i></button>
+    </form>
+</div>

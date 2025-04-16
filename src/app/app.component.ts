@@ -7,9 +7,11 @@ import { AuthService } from './auth.service';
 import { AuthentificationComponent } from './authentification/authentification.component';
 import { Router } from '@angular/router';
 import {UserInterface} from './user.interface';
-import { collection, Firestore, getDocs, query, where } from '@angular/fire/firestore';
+import { collection, doc, Firestore, getDoc, getDocs, query, where } from '@angular/fire/firestore';
 import { FormsModule } from '@angular/forms';
 import { UserService } from './services/user.service';
+import { ChatService } from './services/chat.service';
+
 
 @Component({
   selector: 'app-root',
@@ -22,11 +24,14 @@ import { UserService } from './services/user.service';
 export class AppComponent implements OnInit {
     authService = inject(AuthService);
     userService = inject(UserService);
+    chatService = inject(ChatService);
     router = inject(Router);
     firestore = inject(Firestore);
     searchQuery = '';
     searchResults = signal<UserInterface[]>([]);
     contacts = this.userService.contacts;
+
+    constructor(private elementRef: ElementRef, private renderer: Renderer2) {}
 
     ngOnInit():void {
       this.authService.user$.subscribe((user) => {
@@ -35,6 +40,7 @@ export class AppComponent implements OnInit {
             uid: user.uid,
             email: user.email!,
             username: user.displayName!,
+            isConnected: true
           });
           this.userService.getContacts(user.uid);
         } else {
@@ -47,7 +53,6 @@ export class AppComponent implements OnInit {
 
 
 
-    constructor(private elementRef: ElementRef, private renderer: Renderer2) {}
 
     ngAfterViewInit() {
       this.setupSidebarFunctionality();
@@ -122,6 +127,10 @@ export class AppComponent implements OnInit {
       }
     }
     logout(): void {
+      const currentUser = this.authService.currentUserSignal();
+      if (currentUser) {
+        this.authService.updateConnectionStatus(currentUser.uid, false);
+      }
       this.authService
         .logout()
         .subscribe({
@@ -129,6 +138,7 @@ export class AppComponent implements OnInit {
           this.router.navigateByUrl('/connexion');
           }
         });
+
     }
     async searchUsers(): Promise<void> {
       if (this.searchQuery.trim().length < 2) {
@@ -150,7 +160,8 @@ export class AppComponent implements OnInit {
           users.push({
             uid: data.uid,
             email: data.email,
-            username: data.username
+            username: data.username,
+            isConnected: data.isConnected
           });
         });
         if (this.authService.currentUserSignal()) {
@@ -177,7 +188,16 @@ export class AppComponent implements OnInit {
       this.searchResults.set([]);
     }
 
-    selectContact(contact: UserInterface): void {
-      console.log('Selected contact:', contact);
+
+  async selectContact(contact: UserInterface): Promise<void> {
+    const currentUserUid = this.authService.currentUserSignal()?.uid;
+    if (currentUserUid && contact.uid) {
+      try {
+        const conversationId = await this.chatService.createConversation(currentUserUid, contact.uid);
+        await this.router.navigate(['/chat', conversationId]);
+      } catch (error: any) {
+        console.error('Erreur lors de la création de la conversation:', error.message);
+      }
     }
+  }
 }

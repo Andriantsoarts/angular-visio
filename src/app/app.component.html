@@ -37,10 +37,12 @@
         <div class="contact">
             <ul>
                 <li *ngFor="let contact of contacts()">
-                  <a href="#" (click)="selectContact(contact)">
+                  <a [routerLink]="['/']" (click)="selectContact(contact)">
                     <img [src]="'user.jpeg'" alt="{{ contact.username }}">
                     {{ contact.username }}
-                    <span class="status"></span>
+                    @if (contact.isConnected) {
+                        <span class="status"></span>
+                    }
                   </a>
                 </li>
                 @if (contacts().length === 0) {

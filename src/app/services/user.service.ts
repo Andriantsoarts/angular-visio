@@ -30,7 +30,8 @@ export class UserService {
                         contactDetails.push({
                           uid: contactDoc.id,
                           email: contactData.email,
-                          username: contactData.username
+                          username: contactData.username,
+                          isConnected: contactData.isConnected,
                         });
                       }
                     }
