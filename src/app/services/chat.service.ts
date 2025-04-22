@@ -209,4 +209,12 @@ export class ChatService {
     }
   }
 
+  // getConversationLastMessagesTimestamp(contactId: string): void {
+  //   try {
+  //     const q = query(
+  //       collection(this.firestore, 'conversations'),
+  //     )
+  //   }
+  // }
+
 }

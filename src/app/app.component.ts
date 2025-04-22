@@ -19,7 +19,7 @@ import { ChatService } from './services/chat.service';
   standalone: true,
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
-  imports: [CommonModule, MatButtonModule, RouterOutlet,FormsModule, RouterLink, AuthentificationComponent],
+  imports: [CommonModule, MatButtonModule, RouterOutlet,FormsModule, RouterLink],
 })
 export class AppComponent implements OnInit {
     authService = inject(AuthService);
@@ -110,14 +110,56 @@ export class AppComponent implements OnInit {
       const searchInput = this.elementRef.nativeElement.querySelector("#search-bar");
     }
     isProfileMenuOpen = false;
+    showConversations = true;
+    isSearchBarVisible = false;
+
 
     toggleProfileMenu() {
       this.isProfileMenuOpen = !this.isProfileMenuOpen;
+    }
+    isVisioMenuOpen = false;
+    toggleVisioMenu() {
+      this.isVisioMenuOpen = !this.isVisioMenuOpen;
+      this.isSearchBarVisible = false;
+      this.isProfileMenuOpen = false;
+    }
+    toggleConversations() {
+      this.showConversations = true;
+      this.isVisioMenuOpen = false;
+      this.isSearchBarVisible = false;
+      this.isProfileMenuOpen = false;
+    }
+    toggleContacts() {
+      this.showConversations = false;
+      this.isVisioMenuOpen = false;
+      this.isSearchBarVisible = false;
+      this.isProfileMenuOpen = false;
+    }
+    toggleSearchBar() {
+      this.isSearchBarVisible = !this.isSearchBarVisible;
+      this.isVisioMenuOpen = false;
+      this.isProfileMenuOpen = false;
     }
 
     navigateToEditProfile() {
       this.router.navigate(['/edit-profile']);
       this.isProfileMenuOpen = false;
+      this.isVisioMenuOpen = false;
+    }
+    navigateToHome() {
+      this.router.navigate(['/']);
+      this.isProfileMenuOpen = false;
+      this.isSearchBarVisible = false;
+      this.isVisioMenuOpen = false;
+    }
+
+    navigateToCallCreatePage(){
+      this.router.navigate(['/callCreate']);
+      this.isVisioMenuOpen = false;
+    }
+    navigateToCallPage(){
+      this.router.navigate(['/call']);
+      this.isVisioMenuOpen = false;
     }
     confirmLogout() {
       const confirmation = window.confirm('Êtes-vous sûr de vouloir vous déconnecter ?');
@@ -178,12 +220,15 @@ export class AppComponent implements OnInit {
       if (currentUserUid && user.uid) {
         try {
           await this.userService.addContact(currentUserUid, user.uid);
-          console.log('Contact ajouté:', user.username);
+          await this.selectContact(user);
         } catch (error: any) {
-          console.error('Erreur lors de l\'ajout:', error.message);
+          if (error.message === 'CONTACT_ALREADY_EXISTS') {
+            await this.selectContact(user);
+          } else {
+            console.error('Erreur lors de l\'ajout:', error.message);
+          }
         }
       }
-      console.log('Selected user:', user);
       this.searchQuery = '';
       this.searchResults.set([]);
     }
@@ -200,4 +245,54 @@ export class AppComponent implements OnInit {
       }
     }
   }
+  dummyConversations = [
+    {
+      name: 'John Doe',
+      lastMessage: 'Salut, ça va ?',
+      unread: 2,
+      isConnected: true
+    },
+    {
+      name: 'John Doe',
+      lastMessage: 'Salut, ça va ?',
+      unread: 2,
+      isConnected: true
+    },
+    {
+      name: 'John Doe',
+      lastMessage: 'Salut, ça va ?',
+      unread: 2,
+      isConnected: true
+    },
+    {
+      name: 'John Doe',
+      lastMessage: 'Salut, ça va ?',
+      unread: 2,
+      isConnected: true
+    },
+    {
+      name: 'John Doe',
+      lastMessage: 'Salut, ça va ?',
+      unread: 2,
+      isConnected: true
+    },
+    {
+      name: 'John Doe',
+      lastMessage: 'Salut, ça va ?',
+      unread: 2,
+      isConnected: true
+    },
+    {
+      name: 'John Doe',
+      lastMessage: 'Salut, ça va ?',
+      unread: 2,
+      isConnected: true
+    },
+    {
+      name: 'Marie Dupont',
+      lastMessage: 'À demain pour la réunion !',
+      unread: 0,
+      isConnected: false
+    }
+  ];
 }

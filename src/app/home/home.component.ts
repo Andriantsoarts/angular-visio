@@ -12,5 +12,5 @@ import { AuthService } from "../auth.service";
     imports: [ReactiveFormsModule],
 })
 export class HomeComponent {
-
+    authService = inject(AuthService);
 }

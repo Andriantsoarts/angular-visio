@@ -3,7 +3,9 @@
         <div class="user-info">
             <img src="user.jpeg" alt="">
             <h2>{{ otherParticipantUsername || 'Utilisateur' }}</h2>
-            <span class="status"></span>
+            @if (otherParticipantIsConnected) {
+                <span class="status"></span>
+            }
         </div>
         <div class="options">
             <i class="fa-solid fa-ellipsis"></i>

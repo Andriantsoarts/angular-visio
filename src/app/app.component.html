@@ -18,7 +18,43 @@
                 </div>
             </div>
         </div>
-        <form (submit)="onSearchSubmit($event)">
+
+        <div class="menu-button">
+            <div class="menu-button-list">
+                <ul>
+                    <li (click)="navigateToHome()" data-tooltip="Accueil">
+                        <i class="fa-solid fa-house"></i>
+                    </li>
+                    <li (click)="toggleConversations()"
+                        [class.active]="showConversations"
+                        data-tooltip="Conversations">
+                        <i class="fa-solid fa-comment"></i>
+                    </li>
+                    <li (click)="toggleContacts()"
+                        [class.active]="!showConversations"
+                        data-tooltip="Contacts">
+                        <i class="fa-solid fa-user"></i>
+                    </li>
+                    <li (click)="toggleSearchBar()"
+                        [class.active]="isSearchBarVisible"
+                        data-tooltip="Chercher un utilisateur">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                    </li>
+                    <li (click)="toggleVisioMenu()"
+                        [class.active]="isVisioMenuOpen"
+                        data-tooltip="Réunions">
+                        <i class="fa-solid fa-video"></i>
+                    </li>
+                </ul>
+            </div>
+            <div class="visio-menu" *ngIf="isVisioMenuOpen">
+                <ul>
+                    <li (click)="navigateToCallCreatePage()">Créer une réunion</li>
+                    <li (click)="navigateToCallPage()">Rejoindre une réunion</li>
+                </ul>
+            </div>
+        </div>
+        <form (submit)="onSearchSubmit($event)" *ngIf="isSearchBarVisible">
             <input type="text"
                 name="search"
                 id="search-bar"
@@ -35,20 +71,38 @@
             </ul>
         </form>
         <div class="contact">
-            <ul>
-                <li *ngFor="let contact of contacts()">
-                  <a [routerLink]="['/']" (click)="selectContact(contact)">
-                    <img [src]="'user.jpeg'" alt="{{ contact.username }}">
-                    {{ contact.username }}
-                    @if (contact.isConnected) {
-                        <span class="status"></span>
+            @if (showConversations) {
+                <!-- Liste factice de conversations -->
+                <ul>
+                    <li *ngFor="let conversation of dummyConversations">
+                        <a href="#">
+                            <img src="user.jpeg" alt="{{ conversation.name }}">
+                            {{ conversation.name }}
+                            <span class="last-message">{{ conversation.lastMessage }}</span>
+                            <span class="badge">{{ conversation.unread }}</span>
+                        </a>
+                    </li>
+                    <li class="no-contacts" *ngIf="dummyConversations.length === 0">
+                        Aucune conversation récente
+                    </li>
+                </ul>
+            }
+            @else {
+                <ul>
+                    <li *ngFor="let contact of contacts()">
+                    <a [routerLink]="['/']" (click)="selectContact(contact)">
+                        <img [src]="'user.jpeg'" alt="{{ contact.username }}">
+                        {{ contact.username }}
+                        @if (contact.isConnected) {
+                            <span class="status"></span>
+                        }
+                    </a>
+                    </li>
+                    @if (contacts().length === 0) {
+                    <li class="no-contacts">Aucun contact pour le moment</li>
                     }
-                  </a>
-                </li>
-                @if (contacts().length === 0) {
-                  <li class="no-contacts">Aucun contact pour le moment</li>
-                }
-            </ul>
+                </ul>
+            }
         </div>
     </nav>
     <div class="content">

@@ -26,6 +26,7 @@ export class ChatComponent {
     route = inject(ActivatedRoute);
     conversation: Conversation | null = null;
     otherParticipantUsername: string = '';
+    otherParticipantIsConnected: boolean = false;
     messages: Message[] = [];
     messageForm = this.fb.group({
       content: ['', [Validators.required, Validators.maxLength(1000)]]
@@ -82,6 +83,7 @@ export class ChatComponent {
     async loadOtherParticipantUsername(): Promise<void> {
         if (!this.conversation) {
             this.otherParticipantUsername = '';
+            this.otherParticipantIsConnected = false;
             return;
         }
 
@@ -92,15 +94,19 @@ export class ChatComponent {
                 const userDoc = await getDoc(doc(this.firestore, 'users', otherUid));
                 if (userDoc.exists()) {
                 this.otherParticipantUsername = userDoc.data()['username'] || 'Utilisateur';
+                this.otherParticipantIsConnected = userDoc.data()['isConnected'] || false;
                 } else {
                 this.otherParticipantUsername = 'Utilisateur';
+                this.otherParticipantIsConnected = false;
                 }
             } else {
                 this.otherParticipantUsername = 'Utilisateur';
+                this.otherParticipantIsConnected = false;
             }
         } catch (error) {
             console.error('Error loading participant username:', error);
             this.otherParticipantUsername = 'Utilisateur';
+            this.otherParticipantIsConnected = false;
         }
     }
     loadMessages(): void {

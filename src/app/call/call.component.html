@@ -1,0 +1,12 @@
+<div class="call">
+    <section class="join-section" *ngIf="!callingService.callId()">
+        <div class="join-call-form">
+            <label for="location-search">Rejoindre une réunion</label>
+            <input id="location-search" #callId placeholder="Entrez l'ID de la réunion" />
+        </div>
+        <button (click)="setCallId(callId.value)">Rejoindre</button>
+    </section>
+    <section *ngIf="callingService.call()">
+        <app-callPage [call]="callingService.call()!"></app-callPage>
+    </section>
+</div>

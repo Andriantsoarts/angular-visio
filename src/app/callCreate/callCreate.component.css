@@ -1,0 +1,78 @@
+.call {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+  }
+
+.join-section {
+    background-color: var(--bg-light);
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: var(--box-shadow);
+    text-align: center;
+    color: var(--text-color-dark);
+}
+
+button {
+    background-color: var(--primary-color);
+    color: var(--text-color);
+    border-radius: 10px;
+    border: solid 1px var(--bg-light);
+    padding: 5px 10px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.3s ease-in-out;
+}
+
+button:hover {
+    background-color: var(--secondary-color);
+    color: var(--text-color-dark);
+    border: solid 1px var(--bg-dark);
+    box-shadow: var(--box-shadow-blue);
+}
+.create-call {
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.call-info {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    background: var(--bg-dark);
+    color: var(--text-color);
+    border: 1px solid var(--bg-light);
+    box-shadow: var(--box-shadow);
+    border-radius: 5px;
+    padding: 0.5rem 1rem;
+    z-index: 100;
+}
+
+.separator {
+    margin: 2rem 0;
+    text-align: center;
+    position: relative;
+}
+
+.separator::before {
+    content: "";
+    display: block;
+    height: 1px;
+    background: #ccc;
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+}
+
+.separator::after {
+    content: "OU";
+    display: inline-block;
+    background: white;
+    padding: 0 1rem;
+    position: relative;
+    z-index: 1;
+}
