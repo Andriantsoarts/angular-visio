@@ -1,16 +1,16 @@
 <div class="callPage">
-    <section>
-        <div class="particiants">
-            <ng-container
-                *ngFor="let participant of participants(); trackBy: trackBySessionId"
-            >
-                <app-participant [participant]="participant"></app-participant>
-            </ng-container>
-        </div>
-        <div class="call-controls">
-            <button (click)="toogleMicrophone()">Mic</button>
-            <button (click)="toogleCamera()">Camera</button>
-            <button class="leave-button" (click)="leaveCall()">Quitter</button>
-        </div>
-    </section>
+  <section>
+    <div class="participants">
+      <ng-container
+        *ngFor="let participant of participants(); trackBy: trackBySessionId"
+      >
+        <app-participant [participant]="participant"></app-participant>
+      </ng-container>
+    </div>
+    <div class="call-controls">
+      <button (click)="toogleMicrophone()">Mic</button>
+      <button (click)="toogleCamera()">Camera</button>
+      <button class="leave-button" (click)="leaveCall()">Quitter</button>
+    </div>
+  </section>
 </div>

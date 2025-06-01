@@ -1,117 +1,149 @@
 @if (authService.currentUserSignal()) {
 <div class="container">
-    <nav class="side-bar">
-        <div class="close-menu" id="close-menu" (click)="closeSidebar()"><i class="fa-solid fa-x"></i></div>
-        <h1>VisioChat</h1>
-        <div class="profile">
-            <div class="header-profile">
-                <div class="header-profile-img" (click)="toggleProfileMenu()">
-                    <img src="user.jpeg" alt="user">
-                    <span class="status"></span>
-                </div>
-                <h2>{{ authService.currentUserSignal()?.username || 'Utilisateur' }}</h2>
-                <div class="profile-menu" *ngIf="isProfileMenuOpen">
-                    <ul>
-                        <li (click)="navigateToEditProfile()">Modifier profil</li>
-                        <li (click)="confirmLogout()">Déconnexion</li>
-                    </ul>
-                </div>
-            </div>
+  <nav class="side-bar">
+    <div class="close-menu" id="close-menu" (click)="closeSidebar()">
+      <i class="fa-solid fa-x"></i>
+    </div>
+    <h1>VisioChat</h1>
+    <div class="profile">
+      <div class="header-profile">
+        <div class="header-profile-img" (click)="toggleProfileMenu()">
+          <img src="user.jpeg" alt="user" />
+          <span class="status"></span>
         </div>
+        <h2>
+          {{ authService.currentUserSignal()?.username || "Utilisateur" }}
+        </h2>
+        <div class="profile-menu" *ngIf="isProfileMenuOpen">
+          <ul>
+            <li (click)="navigateToEditProfile()">Modifier profil</li>
+            <li (click)="confirmLogout()">Déconnexion</li>
+          </ul>
+        </div>
+      </div>
+    </div>
 
-        <div class="menu-button">
-            <div class="menu-button-list">
-                <ul>
-                    <li (click)="navigateToHome()" data-tooltip="Accueil">
-                        <i class="fa-solid fa-house"></i>
-                    </li>
-                    <li (click)="toggleConversations()"
-                        [class.active]="showConversations"
-                        data-tooltip="Conversations">
-                        <i class="fa-solid fa-comment"></i>
-                    </li>
-                    <li (click)="toggleContacts()"
-                        [class.active]="!showConversations"
-                        data-tooltip="Contacts">
-                        <i class="fa-solid fa-user"></i>
-                    </li>
-                    <li (click)="toggleSearchBar()"
-                        [class.active]="isSearchBarVisible"
-                        data-tooltip="Chercher un utilisateur">
-                        <i class="fa-solid fa-magnifying-glass"></i>
-                    </li>
-                    <li (click)="toggleVisioMenu()"
-                        [class.active]="isVisioMenuOpen"
-                        data-tooltip="Réunions">
-                        <i class="fa-solid fa-video"></i>
-                    </li>
-                </ul>
-            </div>
-            <div class="visio-menu" *ngIf="isVisioMenuOpen">
-                <ul>
-                    <li (click)="navigateToCallCreatePage()">Créer une réunion</li>
-                    <li (click)="navigateToCallPage()">Rejoindre une réunion</li>
-                </ul>
-            </div>
-        </div>
-        <form (submit)="onSearchSubmit($event)" *ngIf="isSearchBarVisible">
-            <input type="text"
-                name="search"
-                id="search-bar"
-                placeholder="Chercher un utilisateur..."
-                [(ngModel)]="searchQuery"
-                (input)="searchUsers()">
-            <!--<button type="submit">
+    <div class="menu-button">
+      <div class="menu-button-list">
+        <ul>
+          <li (click)="navigateToHome()" data-tooltip="Accueil">
+            <i class="fa-solid fa-house"></i>
+          </li>
+          <li
+            (click)="toggleConversations()"
+            [class.active]="showConversations"
+            data-tooltip="Conversations"
+          >
+            <i class="fa-solid fa-comment"></i>
+          </li>
+          <li
+            (click)="toggleContacts()"
+            [class.active]="!showConversations"
+            data-tooltip="Contacts"
+          >
+            <i class="fa-solid fa-user"></i>
+          </li>
+          <li
+            (click)="toggleSearchBar()"
+            [class.active]="isSearchBarVisible"
+            data-tooltip="Chercher un utilisateur"
+          >
+            <i class="fa-solid fa-magnifying-glass"></i>
+          </li>
+          <li
+            (click)="toggleVisioMenu()"
+            [class.active]="isVisioMenuOpen"
+            data-tooltip="Réunions"
+          >
+            <i class="fa-solid fa-video"></i>
+          </li>
+        </ul>
+      </div>
+      <div class="visio-menu" *ngIf="isVisioMenuOpen">
+        <ul>
+          <li (click)="navigateToCallCreatePage()">Créer une réunion</li>
+          <li (click)="navigateToCallPage()">Rejoindre une réunion</li>
+        </ul>
+      </div>
+    </div>
+    <form (submit)="onSearchSubmit($event)" *ngIf="isSearchBarVisible">
+      <input
+        type="text"
+        name="search"
+        id="search-bar"
+        placeholder="Chercher un utilisateur..."
+        [(ngModel)]="searchQuery"
+        (input)="searchUsers()"
+      />
+      <!--<button type="submit">
                 <i class="fas fa-search"></i>
             </button>-->
-            <ul class="search-results" *ngIf="searchResults().length > 0">
-              <li *ngFor="let user of searchResults()" (click)="selectUser(user)">
-                <img src="user.jpeg" alt=""> {{ user.username }}
-              </li>
-            </ul>
-        </form>
-        <div class="contact">
-            @if (showConversations) {
-                <!-- Liste factice de conversations -->
-                <ul>
-                    <li *ngFor="let conversation of dummyConversations">
-                        <a href="#">
-                            <img src="user.jpeg" alt="{{ conversation.name }}">
-                            {{ conversation.name }}
-                            <span class="last-message">{{ conversation.lastMessage }}</span>
-                            <span class="badge">{{ conversation.unread }}</span>
-                        </a>
-                    </li>
-                    <li class="no-contacts" *ngIf="dummyConversations.length === 0">
-                        Aucune conversation récente
-                    </li>
-                </ul>
+      <ul class="search-results" *ngIf="searchResults().length > 0">
+        <li *ngFor="let user of searchResults()" (click)="selectUser(user)">
+          <img src="user.jpeg" alt="" /> {{ user.username }}
+        </li>
+      </ul>
+    </form>
+    <div class="contact">
+      @if (showConversations) {
+      <ul>
+        <li *ngFor="let conversation of conversations">
+          <a
+            [routerLink]="['/chat']"
+            (click)="selectConversation(conversation)"
+          >
+            <img src="user.jpeg" alt="{{ conversation.name }}" />
+            @if (conversation.isConnected) {
+            <span class="status"></span>
             }
-            @else {
-                <ul>
-                    <li *ngFor="let contact of contacts()">
-                    <a [routerLink]="['/']" (click)="selectContact(contact)">
-                        <img [src]="'user.jpeg'" alt="{{ contact.username }}">
-                        {{ contact.username }}
-                        @if (contact.isConnected) {
-                            <span class="status"></span>
-                        }
-                    </a>
-                    </li>
-                    @if (contacts().length === 0) {
-                    <li class="no-contacts">Aucun contact pour le moment</li>
-                    }
-                </ul>
+            {{ conversation.name }}
+            @if(conversation.lastMessageSender ===
+            authService.currentUserSignal()?.uid) {
+            <span class="last-message"
+              >Vous : {{ truncateMessage(conversation.lastMessage, 15) }}</span
+            >
+            }@else if (conversation.lastMessageSender !==
+            authService.currentUserSignal()?.username) {
+            <span class="last-message">{{
+              truncateMessage(conversation.lastMessage, 15)
+            }}</span>
+            } @if (conversation.unread > 0 && conversation.unread <= 9) {
+            <span class="badge"> {{ conversation.unread }} </span>
+            }@else if (conversation.unread > 0 && conversation.unread > 9 ) {
+            <span class="badge">9+</span>
             }
-        </div>
-    </nav>
-    <div class="content">
-        <router-outlet></router-outlet>
+          </a>
+        </li>
+        <li class="no-contacts" *ngIf="conversations.length === 0">
+          Aucune conversation récente
+        </li>
+      </ul>
+      } @else {
+      <ul>
+        <li *ngFor="let contact of contacts()">
+          <a [routerLink]="['/chat']" (click)="selectContact(contact)">
+            <img [src]="'user.jpeg'" alt="{{ contact.username }}" />
+            {{ contact.username }}
+            @if (contact.isConnected) {
+            <span class="status"></span>
+            }
+          </a>
+        </li>
+        @if (contacts().length === 0) {
+        <li class="no-contacts">Aucun contact pour le moment</li>
+        }
+      </ul>
+      }
     </div>
-    <div class="open-menu" id="open-menu"  (click)="openSidebar()"><i class="fa-solid fa-angles-right"></i></div>
+  </nav>
+  <div class="content">
+    <router-outlet></router-outlet>
+  </div>
+  <div class="open-menu" id="open-menu" (click)="openSidebar()">
+    <i class="fa-solid fa-angles-right"></i>
+  </div>
 </div>
 
-}
-@else {
-    <router-outlet></router-outlet>
+} @else {
+<router-outlet></router-outlet>
 }

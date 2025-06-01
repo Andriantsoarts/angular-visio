@@ -1,14 +1,14 @@
 <div class="call">
-    <section class="join-section" *ngIf="!callingService.callId()">
-        <div class="create-call">
-            <button (click)="createNewCall()">Créer une nouvelle réunion</button>
-            <div *ngIf="callingService.generatedCallId() && isCallInfoVisible" class="call-info">
-                <p>ID de la réunion : {{ callingService.generatedCallId() }}</p>
-                <button (click)="copyCallLink()">Copier le lien</button>
-            </div>
-        </div>
-    </section>
-    <section *ngIf="callingService.call()">
-        <app-callPageCreate [call]="callingService.call()!"></app-callPageCreate>
-    </section>
+  <section class="join-section">
+    <div class="create-call">
+      <button (click)="createNewCall()">Créer une nouvelle réunion</button>
+      <div
+        *ngIf="callingService.generatedCallId() && isCallInfoVisible"
+        class="call-info"
+      >
+        <p>ID de la réunion : {{ callingService.generatedCallId() }}</p>
+        <button (click)="copyCallLink()">Copier le lien</button>
+      </div>
+    </div>
+  </section>
 </div>

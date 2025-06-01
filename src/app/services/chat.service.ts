@@ -1,6 +1,6 @@
 import { inject, Injectable, signal } from "@angular/core";
 import { Auth, user } from "@angular/fire/auth";
-import { Firestore, doc, getDoc, setDoc, deleteDoc, collection, query, where, getDocs, updateDoc, arrayUnion, orderBy, onSnapshot } from "@angular/fire/firestore";
+import { Firestore, doc, getDoc, setDoc, deleteDoc, collection, query, where, getDocs, updateDoc, arrayUnion, orderBy, onSnapshot, writeBatch } from "@angular/fire/firestore";
 import { UserInterface } from "../user.interface";
 import { Conversation } from "../conversation.interface";
 import { Message } from "../message.interface";
@@ -23,6 +23,33 @@ export class ChatService {
   userService = inject(UserService);
   user$ = user(this.firebaseAuth);
   currentUserSignal = signal<UserInterface | null | undefined>(undefined);
+
+
+  async getAllConversations( currentUserId : string | null | undefined ): Promise<Conversation[]> {
+    try {
+      if (!currentUserId) {
+        throw new Error('User not authenticated');
+      }
+
+      const q = query(
+        collection(this.firestore, 'conversations'),
+        where('participants', 'array-contains', currentUserId),
+        orderBy('lastMessageTimestamp', 'desc')
+      );
+      const querySnapshot = await getDocs(q);
+      return querySnapshot.docs.map(doc => ({
+        id: doc.id,
+        participants: doc.data()['participants'],
+        createdAt: doc.data()['createdAt'].toDate(),
+        lastMessage: doc.data()['lastMessage'],
+        lastMessageSender: doc.data()['lastMessageSender'],
+        lastMessageTimestamp: doc.data()['lastMessageTimestamp'] ? doc.data()['lastMessageTimestamp'].toDate() : null,
+      }));
+    } catch (error) {
+      console.error('Error getting conversations:', error);
+      throw error;
+    }
+  }
 
   async getConversation(userId1: string, userId2: string): Promise<Conversation | null> {
     try {
@@ -208,13 +235,27 @@ export class ChatService {
       throw error;
     }
   }
+  async markMessagesAsRead(conversationId: string): Promise<void> {
+    try {
+      const currentUserId = this.firebaseAuth.currentUser?.uid;
+      const messagesQuery = query(
+        collection(this.firestore, 'messages'),
+        where('conversationId', '==', conversationId),
+        where('isRead', '==', false),
+        where('senderId', '!=', currentUserId)
+      );
+      const querySnapshot = await getDocs(messagesQuery);
 
-  // getConversationLastMessagesTimestamp(contactId: string): void {
-  //   try {
-  //     const q = query(
-  //       collection(this.firestore, 'conversations'),
-  //     )
-  //   }
-  // }
+      const batch = writeBatch(this.firestore);
+      querySnapshot.docs.forEach(doc => {
+        batch.update(doc.ref, { isRead: true });
+      });
+      await batch.commit();
+    } catch (error) {
+      console.error('Error marking messages as read:', error);
+      throw error;
+    }
+  }
+
 
 }

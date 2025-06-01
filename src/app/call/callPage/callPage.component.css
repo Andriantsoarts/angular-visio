@@ -1,32 +1,34 @@
 section {
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-  }
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
 
-  .participants {
-    display: flex;
-    flex: 1;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-  }
+.participants {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
 
-  .call-controls {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 0.5rem;
-    padding: 0 0.5rem;
-  }
+.call-controls {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.5rem;
+  padding: 0 0.5rem;
+}
 
-  button {
-    font-size: smaller;
-  }
+button {
+  font-size: smaller;
+}
 
-  .leave-button {
-    background: var(--custom-red);
-  }
+.leave-button {
+  background: var(--custom-red);
+}
 
-  .leave-button:hover {
-    background: var(--custom-red-hover);
-  }
+.leave-button:hover {
+  background: var(--custom-red-hover);
+}

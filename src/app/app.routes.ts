@@ -5,6 +5,7 @@ import { authGuard } from './auth.guard';
 import { ChatComponent } from './chat/chat.component';
 import { CallComponent } from './call/call.component';
 import { CallCreateComponent } from './callCreate/callCreate.component';
+import { LoadingChatComponent } from './loadingChat/loadingChat.component';
 
 export const routes: Routes = [
     {
@@ -14,6 +15,11 @@ export const routes: Routes = [
     {
       path: '',
       component: HomeComponent,
+      canActivate: [authGuard],
+    },
+    {
+      path: 'chat',
+      component: LoadingChatComponent,
       canActivate: [authGuard],
     },
     {
